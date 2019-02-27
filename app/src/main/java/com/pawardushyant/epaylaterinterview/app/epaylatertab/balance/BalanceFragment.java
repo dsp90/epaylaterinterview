@@ -15,6 +15,7 @@ import com.pawardushyant.epaylaterinterview.retrofit.apicall.ApiInterface;
 import com.pawardushyant.epaylaterinterview.retrofit.apicall.ApiManager;
 import com.pawardushyant.epaylaterinterview.retrofit.constants.Constants;
 import com.pawardushyant.epaylaterinterview.retrofit.model.Balance;
+import com.pawardushyant.epaylaterinterview.utils.Logger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,24 +35,30 @@ public class BalanceFragment extends BaseFragment {
     }
 
     private void getBalance() {
-        String authtoken = "Bearer " + MainApp.getPrefs().getAccountToken();
         ApiInterface apiService = ApiManager.getRetrofitClient().create(ApiInterface.class);
-        Call<Balance> call = apiService.getBalance(authtoken, Constants.CONTENT_TYPE);
+        Call<Balance> call = apiService.getBalance(Constants.AUTHTOKEN, Constants.CONTENT_TYPE);
         call.enqueue(new Callback<Balance>() {
             @Override
             public void onResponse(Call<Balance> call, Response<Balance> response) {
-                displayBalance(response.body());
+                saveBalanceData(response.body());
             }
 
             @Override
             public void onFailure(Call<Balance> call, Throwable t) {
-
+                Logger.printLog("BalanceFragment", t.getMessage());
             }
         });
     }
 
-    private void displayBalance(Balance body) {
-        tv_balance.setText("Your current balance is " + body.getBalance() + " " + body.getCurrency());
+    private void saveBalanceData(Balance response) {
+        MainApp.getPrefs().setBalance(response.getBalance());
+        MainApp.getPrefs().setCurrency(response.getCurrency());
+        displayBalance();
+    }
+
+    private void displayBalance() {
+        tv_balance.setText("Your current balance is " + MainApp.getPrefs().getBalance() + " " +
+                MainApp.getPrefs().getCurrency());
     }
 
     private void initViews(View rootView) {

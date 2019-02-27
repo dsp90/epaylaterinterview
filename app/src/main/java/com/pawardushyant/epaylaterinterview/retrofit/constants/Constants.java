@@ -1,9 +1,12 @@
 package com.pawardushyant.epaylaterinterview.retrofit.constants;
 
+import com.pawardushyant.epaylaterinterview.MainApp;
+
 public class Constants {
 
     public final static String BASE_URL = "https://interviewer-api.herokuapp.com";
     public final static String CONTENT_TYPE = "application/json";
+    public final static String AUTHTOKEN = "Bearer " + MainApp.getPrefs().getAccountToken();;
 
     public interface Endpoint {
         public static final String login = BASE_URL + "/login";

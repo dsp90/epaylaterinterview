@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:padding="@dimen/dimen_8dp"
+        android:textSize="@dimen/text_size_body"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ed_spend"
+        tools:text="Your spending limit is 95gbp"/>
+
+    <EditText
+        android:id="@+id/ed_spend"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:hint="@string/enter_amount"
+        android:textColor="@color/black"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        app:layout_constraintHeight_percent="0.064"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:padding="@dimen/dimen_8dp"
+        android:textSize="@dimen/text_size_body"
+        android:inputType="number"
+        android:imeOptions="actionNext"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <EditText
+        android:id="@+id/ed_spend_desc"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:hint="@string/enter_desc"
+        android:textColor="@color/black"
+        android:layout_marginStart="@dimen/dimen_16dp"
+        app:layout_constraintHeight_percent="0.064"
+        android:layout_marginEnd="@dimen/dimen_16dp"
+        android:padding="@dimen/dimen_8dp"
+        android:textSize="@dimen/text_size_body"
+        android:imeOptions="actionDone"
+        app:layout_constraintTop_toBottomOf="@+id/ed_spend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_spend"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.080"
+        android:textSize="@dimen/text_size_button"
+        android:text="@string/spend"
+        app:layout_constraintTop_toBottomOf="@+id/ed_spend"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ed_spend"
+        app:layout_constraintEnd_toEndOf="@+id/ed_spend"/>
+
+</android.support.constraint.ConstraintLayout>

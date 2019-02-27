@@ -12,6 +12,8 @@ public class Spend implements Parcelable {
 
     private String currency;
 
+    public Spend(){}
+
     private Spend(Parcel in) {
         date = in.readString();
         amount = in.readString();

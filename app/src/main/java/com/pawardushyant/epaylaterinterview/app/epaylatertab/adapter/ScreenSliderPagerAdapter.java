@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.pawardushyant.epaylaterinterview.app.epaylatertab.balance.BalanceFragment;
+import com.pawardushyant.epaylaterinterview.app.epaylatertab.spend.FragmentSpend;
 
 public class ScreenSliderPagerAdapter extends FragmentStatePagerAdapter {
     int pages;
@@ -17,7 +18,14 @@ public class ScreenSliderPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        return new BalanceFragment();
+        switch (i) {
+            case 0:
+                return new BalanceFragment();
+            case 1:
+                return new FragmentSpend();
+            default:
+                return null;
+        }
     }
 
     @Override

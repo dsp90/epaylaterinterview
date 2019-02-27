@@ -6,6 +6,9 @@ import android.net.NetworkInfo;
 
 import com.pawardushyant.epaylaterinterview.MainApp;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AppUtils {
 
     public static boolean isNetworkConnected() {
@@ -17,6 +20,12 @@ public class AppUtils {
         return activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
 
+    }
+
+    public static String getDateTime(){
+        String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(new Date());
     }
 
 }
