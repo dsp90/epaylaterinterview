@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -38,7 +38,9 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:gravity="center"
-        android:padding="@dimen/dimen_8dp"
+        android:paddingTop="@dimen/dimen_8dp"
+        android:paddingBottom="@dimen/dimen_8dp"
+        android:paddingStart="@dimen/dimen_8dp"
         app:layout_constraintStart_toStartOf="@id/tv_desc"
         app:layout_constraintTop_toBottomOf="@+id/tv_desc"
         android:text="Transaction ID: "/>
@@ -50,7 +52,8 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:gravity="center"
-        android:padding="@dimen/dimen_8dp"
+        android:paddingTop="@dimen/dimen_8dp"
+        android:paddingBottom="@dimen/dimen_8dp"
         app:layout_constraintStart_toEndOf="@id/tv_trans_label"
         app:layout_constraintTop_toBottomOf="@+id/tv_desc"
         tools:text="11"/>

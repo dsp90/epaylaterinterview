@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.pawardushyant.epaylaterinterview.MainApp;
 import com.pawardushyant.epaylaterinterview.R;
 import com.pawardushyant.epaylaterinterview.retrofit.model.Transaction;
+import com.pawardushyant.epaylaterinterview.utils.AppUtils;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder customViewHolder, int i) {
         customViewHolder.tv_trans_id.setText(transactions.get(i).getId());
-        customViewHolder.tv_trans_date.setText(transactions.get(i).getDate());
+        customViewHolder.tv_trans_date.setText(AppUtils.getFormattedDate(transactions.get(i).getDate()));
         customViewHolder.tv_amount.setText(transactions.get(i).getAmount() + " " + transactions.get(i).getCurrency() );
         customViewHolder.tv_desc.setText(transactions.get(i).getDescription());
     }

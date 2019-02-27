@@ -6,6 +6,8 @@ import com.pawardushyant.epaylaterinterview.retrofit.model.Login;
 import com.pawardushyant.epaylaterinterview.retrofit.model.Spend;
 import com.pawardushyant.epaylaterinterview.retrofit.model.Transaction;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -24,8 +26,8 @@ public interface ApiInterface {
     Call<Spend> getSpend(@Header("Authorization") String auth, @Header("Accept") String accept,
                           @Header("Content-Type") String  contentType, @Body Spend spend);
 
-    @POST(Constants.Endpoint.transactions)
-    Call<Transaction> getTransactions(@Header("Authorization") String authorization,
-                                      @Header("Accept") String accept);
+    @GET(Constants.Endpoint.transactions)
+    Call<List<Transaction>> getTransactions(@Header("Authorization") String authorization,
+                                           @Header("Accept") String accept);
 
 }

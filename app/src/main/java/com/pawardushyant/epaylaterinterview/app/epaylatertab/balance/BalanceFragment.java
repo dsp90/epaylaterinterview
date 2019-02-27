@@ -30,8 +30,13 @@ public class BalanceFragment extends BaseFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_balance, container, false);
         initViews(rootView);
-        getBalance();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getBalance();
     }
 
     private void getBalance() {

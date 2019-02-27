@@ -18,7 +18,6 @@ import com.pawardushyant.epaylaterinterview.retrofit.constants.Constants;
 import com.pawardushyant.epaylaterinterview.retrofit.model.Transaction;
 import com.pawardushyant.epaylaterinterview.utils.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,27 +38,27 @@ public class TransactionFragment extends BaseFragment {
 
     private void getTransactions() {
         ApiInterface apiInterface = ApiManager.getRetrofitClient().create(ApiInterface.class);
-        Call<Transaction> transactionCall = apiInterface.getTransactions(Constants.AUTHTOKEN, Constants.CONTENT_TYPE);
-        transactionCall.enqueue(new Callback<Transaction>() {
+        Call<List<Transaction>> transactionCall = apiInterface.getTransactions(Constants.AUTHTOKEN, Constants.CONTENT_TYPE);
+        transactionCall.enqueue(new Callback<List<Transaction>>() {
             @Override
-            public void onResponse(Call<Transaction> call, Response<Transaction> response) {
+            public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
                 if (response.isSuccessful()) populateTransactions(response.body());
             }
 
             @Override
-            public void onFailure(Call<Transaction> call, Throwable t) {
+            public void onFailure(Call<List<Transaction>> call, Throwable t) {
                 Logger.printLog("TransactionFragment", t.getMessage());
             }
         });
     }
 
-    private void populateTransactions(Transaction body) {
-        List<Transaction> transactions = (List<Transaction>) body;
+    private void populateTransactions(List<Transaction> body) {
+        List<Transaction> transactions = body;
         TransactionsAdapter transactionsAdapter = new TransactionsAdapter(transactions);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        rv_transactions.setAdapter(transactionsAdapter);
         rv_transactions.setHasFixedSize(true);
         rv_transactions.setLayoutManager(linearLayoutManager);
+        rv_transactions.setAdapter(transactionsAdapter);
     }
 
     private void initView(View root) {

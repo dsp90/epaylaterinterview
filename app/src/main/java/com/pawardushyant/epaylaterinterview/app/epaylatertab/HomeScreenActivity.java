@@ -10,12 +10,13 @@ import android.widget.ProgressBar;
 import com.pawardushyant.epaylaterinterview.R;
 import com.pawardushyant.epaylaterinterview.app.base.BaseActivity;
 import com.pawardushyant.epaylaterinterview.app.epaylatertab.adapter.ScreenSliderPagerAdapter;
+import com.pawardushyant.epaylaterinterview.app.epaylatertab.balance.BalanceFragment;
 import com.pawardushyant.epaylaterinterview.app.epaylatertab.login.LoginInteractor;
 import com.pawardushyant.epaylaterinterview.app.epaylatertab.login.LoginPresenter;
 import com.pawardushyant.epaylaterinterview.app.epaylatertab.login.LoginView;
 
 
-public class HomeScreenActivity extends BaseActivity implements LoginView {
+public class HomeScreenActivity extends BaseActivity implements LoginView, ViewPager.OnPageChangeListener {
 
     ProgressBar progressBar;
 
@@ -83,5 +84,23 @@ public class HomeScreenActivity extends BaseActivity implements LoginView {
         ScreenSliderPagerAdapter adapter = new ScreenSliderPagerAdapter(getSupportFragmentManager(), pages);
         tablayout_home.setupWithViewPager(view_pager_home);
         view_pager_home.setAdapter(adapter);
+        view_pager_home.addOnPageChangeListener(this);
+    }
+
+    @Override
+    public void onPageScrolled(int i, float v, int i1) {
+
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+        if (i == 0){
+
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
     }
 }

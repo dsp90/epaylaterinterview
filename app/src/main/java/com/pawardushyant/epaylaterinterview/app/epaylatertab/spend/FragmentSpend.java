@@ -17,8 +17,10 @@ import com.pawardushyant.epaylaterinterview.app.base.BaseFragment;
 import com.pawardushyant.epaylaterinterview.retrofit.apicall.ApiInterface;
 import com.pawardushyant.epaylaterinterview.retrofit.apicall.ApiManager;
 import com.pawardushyant.epaylaterinterview.retrofit.constants.Constants;
+import com.pawardushyant.epaylaterinterview.retrofit.model.Balance;
 import com.pawardushyant.epaylaterinterview.retrofit.model.Spend;
 import com.pawardushyant.epaylaterinterview.utils.AppUtils;
+import com.pawardushyant.epaylaterinterview.utils.Logger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,11 +55,12 @@ public class FragmentSpend extends BaseFragment implements View.OnClickListener 
         btn_spend = root.findViewById(R.id.btn_spend);
         ed_spend = root.findViewById(R.id.ed_spend);
         ed_spend_desc = root.findViewById(R.id.ed_spend_desc);
+        btn_spend.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_spend:
                 spend();
                 break;
@@ -66,7 +69,7 @@ public class FragmentSpend extends BaseFragment implements View.OnClickListener 
 
     private void spend() {
         String amount = ed_spend.getText().toString();
-        if(isValidated(amount)){
+        if (isValidated(amount)) {
             doSpend(amount);
         }
     }
@@ -84,13 +87,12 @@ public class FragmentSpend extends BaseFragment implements View.OnClickListener 
         ApiInterface apiInterface = ApiManager.getRetrofitClient().create(ApiInterface.class);
         Call<Spend> spendCall = apiInterface.getSpend(Constants.AUTHTOKEN,
                 Constants.CONTENT_TYPE, Constants.CONTENT_TYPE, spend
-                 );
+        );
         spendCall.enqueue(new Callback<Spend>() {
             @Override
             public void onResponse(Call<Spend> call, Response<Spend> response) {
-                if (response.isSuccessful()){
-                    int updatedBal = Integer.parseInt(balance) - Integer.parseInt(amount);
-                    displaBalance(updatedBal);
+                if (response.isSuccessful()) {
+                    updateBalance();
                 }
             }
 
@@ -101,8 +103,32 @@ public class FragmentSpend extends BaseFragment implements View.OnClickListener 
         });
     }
 
-    private void displaBalance(int updatedBal) {
-        tv_spend.setText("Spending limit is " + updatedBal + " "  + currency);
+    private void updateBalance() {
+        ed_spend.setText("");
+        ed_spend_desc.setText("");
+        getBalance();
+    }
+
+    private void getBalance() {
+        ApiInterface apiService = ApiManager.getRetrofitClient().create(ApiInterface.class);
+        Call<Balance> call = apiService.getBalance(Constants.AUTHTOKEN, Constants.CONTENT_TYPE);
+        call.enqueue(new Callback<Balance>() {
+            @Override
+            public void onResponse(Call<Balance> call, Response<Balance> response) {
+                saveBalanceData(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Balance> call, Throwable t) {
+                Logger.printLog("BalanceFragment", t.getMessage());
+            }
+        });
+    }
+
+    private void saveBalanceData(Balance response) {
+        MainApp.getPrefs().setBalance(response.getBalance());
+        MainApp.getPrefs().setCurrency(response.getCurrency());
+        displaySpendingLimit();
     }
 
     private String getTextVal(EditText editText) {
@@ -110,9 +136,13 @@ public class FragmentSpend extends BaseFragment implements View.OnClickListener 
     }
 
     private boolean isValidated(String amount) {
-        int spendingAmount = Integer.parseInt(amount);
-        int limit = Integer.parseInt(MainApp.getPrefs().getBalance());
-        if (spendingAmount > limit){
+        if (TextUtils.isEmpty(amount.trim())) {
+            ed_spend.setError(getString(R.string.cannot_spend_null_amount));
+            return false;
+        }
+        double spendingAmount = Double.parseDouble(amount);
+        double limit = Double.parseDouble(MainApp.getPrefs().getBalance());
+        if (spendingAmount > limit) {
             ed_spend.setError(getString(R.string.cannot_spend_amount_greater_than_limit));
             return false;
         }
