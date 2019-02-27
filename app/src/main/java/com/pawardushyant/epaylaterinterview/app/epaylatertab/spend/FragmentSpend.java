@@ -71,7 +71,7 @@ public class FragmentSpend extends BaseFragment implements View.OnClickListener 
         }
     }
 
-    private void doSpend(String amount) {
+    private void doSpend(final String amount) {
 
         String desc = TextUtils.isEmpty(getTextVal(ed_spend_desc)) ? "Some Item" : getTextVal(ed_spend_desc);
 
@@ -88,7 +88,10 @@ public class FragmentSpend extends BaseFragment implements View.OnClickListener 
         spendCall.enqueue(new Callback<Spend>() {
             @Override
             public void onResponse(Call<Spend> call, Response<Spend> response) {
-
+                if (response.isSuccessful()){
+                    int updatedBal = Integer.parseInt(balance) - Integer.parseInt(amount);
+                    displaBalance(updatedBal);
+                }
             }
 
             @Override
@@ -96,6 +99,10 @@ public class FragmentSpend extends BaseFragment implements View.OnClickListener 
 
             }
         });
+    }
+
+    private void displaBalance(int updatedBal) {
+        tv_spend.setText("Spending limit is " + updatedBal + " "  + currency);
     }
 
     private String getTextVal(EditText editText) {

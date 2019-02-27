@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.pawardushyant.epaylaterinterview.app.epaylatertab.balance.BalanceFragment;
 import com.pawardushyant.epaylaterinterview.app.epaylatertab.spend.FragmentSpend;
+import com.pawardushyant.epaylaterinterview.app.epaylatertab.transaction.TransactionFragment;
 
 public class ScreenSliderPagerAdapter extends FragmentStatePagerAdapter {
     int pages;
@@ -23,6 +24,8 @@ public class ScreenSliderPagerAdapter extends FragmentStatePagerAdapter {
                 return new BalanceFragment();
             case 1:
                 return new FragmentSpend();
+            case 2:
+                return new TransactionFragment();
             default:
                 return null;
         }
