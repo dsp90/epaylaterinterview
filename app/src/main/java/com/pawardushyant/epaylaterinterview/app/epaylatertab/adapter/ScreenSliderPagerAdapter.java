@@ -1,5 +1,6 @@
 package com.pawardushyant.epaylaterinterview.app.epaylatertab.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,6 +35,11 @@ public class ScreenSliderPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return pages;
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 
     @Nullable

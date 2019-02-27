@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.pawardushyant.epaylaterinterview.R;
 import com.pawardushyant.epaylaterinterview.app.base.BaseFragment;
@@ -26,14 +27,21 @@ import retrofit2.Response;
 
 public class TransactionFragment extends BaseFragment {
     private RecyclerView rv_transactions;
+    private ProgressBar progress_circular;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_transaction, container, false);
         initView(root);
-        getTransactions();
+        toggleProgressBar(View.VISIBLE);
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getTransactions();
     }
 
     private void getTransactions() {
@@ -42,11 +50,13 @@ public class TransactionFragment extends BaseFragment {
         transactionCall.enqueue(new Callback<List<Transaction>>() {
             @Override
             public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
+                toggleProgressBar(View.GONE);
                 if (response.isSuccessful()) populateTransactions(response.body());
             }
 
             @Override
             public void onFailure(Call<List<Transaction>> call, Throwable t) {
+                toggleProgressBar(View.GONE);
                 Logger.printLog("TransactionFragment", t.getMessage());
             }
         });
@@ -63,5 +73,10 @@ public class TransactionFragment extends BaseFragment {
 
     private void initView(View root) {
         rv_transactions = root.findViewById(R.id.rv_transactions);
+        progress_circular = root.findViewById(R.id.progress_circular);
+    }
+
+    void toggleProgressBar(int visiblity){
+        progress_circular.setVisibility(visiblity);
     }
 }
